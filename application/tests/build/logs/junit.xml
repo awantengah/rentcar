@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testsuites>
-  <testsuite name="CodeIgniter Application Test Suite" tests="3" assertions="3" errors="0" warnings="0" failures="0" skipped="0" time="0.027208">
-    <testsuite name="Welcome_test" file="E:\wamp\www\rentcar\application\tests\controllers\Welcome_test.php" tests="3" assertions="3" errors="0" warnings="0" failures="0" skipped="0" time="0.027208">
-      <testcase name="test_index" class="Welcome_test" classname="Welcome_test" file="E:\wamp\www\rentcar\application\tests\controllers\Welcome_test.php" line="13" assertions="1" time="0.015950"/>
-      <testcase name="test_method_404" class="Welcome_test" classname="Welcome_test" file="E:\wamp\www\rentcar\application\tests\controllers\Welcome_test.php" line="19" assertions="1" time="0.010246"/>
-      <testcase name="test_APPPATH" class="Welcome_test" classname="Welcome_test" file="E:\wamp\www\rentcar\application\tests\controllers\Welcome_test.php" line="25" assertions="1" time="0.001012"/>
+  <testsuite name="CodeIgniter Application Test Suite" tests="5" assertions="5" errors="0" warnings="0" failures="0" skipped="0" time="0.096731">
+    <testsuite name="Site_test" file="E:\wamp\www\rentcar\application\tests\controllers\Site_test.php" tests="1" assertions="1" errors="0" warnings="0" failures="0" skipped="0" time="0.053134">
+      <testcase name="test_index" class="Site_test" classname="Site_test" file="E:\wamp\www\rentcar\application\tests\controllers\Site_test.php" line="5" assertions="1" time="0.053134"/>
+    </testsuite>
+    <testsuite name="Welcome_test" file="E:\wamp\www\rentcar\application\tests\controllers\Welcome_test.php" tests="3" assertions="3" errors="0" warnings="0" failures="0" skipped="0" time="0.029918">
+      <testcase name="test_index" class="Welcome_test" classname="Welcome_test" file="E:\wamp\www\rentcar\application\tests\controllers\Welcome_test.php" line="13" assertions="1" time="0.012468"/>
+      <testcase name="test_method_404" class="Welcome_test" classname="Welcome_test" file="E:\wamp\www\rentcar\application\tests\controllers\Welcome_test.php" line="19" assertions="1" time="0.016232"/>
+      <testcase name="test_APPPATH" class="Welcome_test" classname="Welcome_test" file="E:\wamp\www\rentcar\application\tests\controllers\Welcome_test.php" line="25" assertions="1" time="0.001218"/>
+    </testsuite>
+    <testsuite name="Car_rental_test" file="E:\wamp\www\rentcar\application\tests\controllers\api\Car_rental_test.php" tests="1" assertions="1" errors="0" warnings="0" failures="0" skipped="0" time="0.013679">
+      <testcase name="test_selected_car" class="Car_rental_test" classname="Car_rental_test" file="E:\wamp\www\rentcar\application\tests\controllers\api\Car_rental_test.php" line="12" assertions="1" time="0.013679"/>
     </testsuite>
   </testsuite>
 </testsuites>
