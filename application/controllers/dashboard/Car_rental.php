@@ -126,39 +126,6 @@ class Car_rental extends MY_Controller
         }
     }
 
-    public function edit($order_number)
-    {
-        $this->load->library('form_validation');
-        $this->form_validation->set_rules('num_box', 'car rental amount', 'required');
-        if (!empty($this->input->post('id_car_data', true))) {
-            $this->form_validation->set_rules('id_car_data[]', 'car', 'required');
-        }
-        if (!empty($this->input->post('rent_begin', true))) {
-            $this->form_validation->set_rules('rent_begin[]', 'rent start', 'required');
-        }
-        if (!empty($this->input->post('rent_end', true))) {
-            $this->form_validation->set_rules('rent_end[]', 'rent end', 'required');
-        }
-
-        if ($this->form_validation->run() == false) {
-            $data['page_title'] = 'Edit ' . $this->page_title;
-            $data['breadcrumb'] = [
-                ['link' => site_url('dashboard/car-rental'), 'title' => 'car rental', 'icon' => '', 'active' => '0'],
-                ['link' => '', 'title' => 'edit car rental', 'icon' => '', 'active' => '1'],
-            ];
-            $data['car_rental'] = $this->car_rental_model->first(
-                array(
-                    'order_number' => $order_number,
-                )
-            );
-            $this->render('car_rental/edit', $data);
-        } else {
-
-            $this->session->set_flashdata('message', array('message' => 'Action Successfully..', 'class' => 'alert-success'));
-            redirect('dashboard/car-rental');
-        }
-    }
-
     public function delete()
     {
         $id = $this->input->get('id', true);

@@ -63,7 +63,6 @@
                         IDR(value.cost).format(true),
                         IDR(value.discount).format(true),
                         value.created_at,
-                        '<a href="'+base_url+'dashboard/car-rental/edit/'+value.order_number+'.html" class="btn btn-success btn-xs"><i class="fa fa-pencil-square-o margin-0"></i> Edit</a> ' +
                         '<a href="#" class="btn btn-danger btn-xs" onclick="deleteData('+value.id+')"><i class="fa fa-trash-o margin-0"></i> Remove</a>'
                     ]).draw(false);
                 });
