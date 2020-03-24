@@ -38,6 +38,7 @@ class Car_data extends MY_Controller
         $this->load->library('form_validation');
         $this->form_validation->set_rules('car_name', 'car name', 'required');
         $this->form_validation->set_rules('production_year', 'production year', 'required');
+        $this->form_validation->set_rules('price_per_day', 'price per day', 'required');
 
         if ($this->form_validation->run() == false) {
             $data['page_title'] = 'Add ' . $this->page_title;
@@ -50,6 +51,7 @@ class Car_data extends MY_Controller
             $data = array(
                 'car_name'        => $this->input->post('car_name', true),
                 'production_year' => $this->input->post('production_year', true),
+                'price_per_day'   => replace_dot($this->input->post('price_per_day', true), ','),
                 'created_at'      => $this->now,
             );
             $this->car_data_model->save($data);
@@ -64,6 +66,7 @@ class Car_data extends MY_Controller
         $this->load->library('form_validation');
         $this->form_validation->set_rules('car_name', 'car name', 'required');
         $this->form_validation->set_rules('production_year', 'production year', 'required');
+        $this->form_validation->set_rules('price_per_day', 'price per day', 'required');
 
         if ($this->form_validation->run() == false) {
             $data['page_title'] = 'Edit ' . $this->page_title;
@@ -77,6 +80,7 @@ class Car_data extends MY_Controller
             $data = array(
                 'car_name'        => $this->input->post('car_name', true),
                 'production_year' => $this->input->post('production_year', true),
+                'price_per_day'   => replace_dot($this->input->post('price_per_day', true), ','),
                 'updated_at'      => $this->now,
             );
             $this->car_data_model->edit($id, $data);

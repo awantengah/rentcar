@@ -11,6 +11,7 @@
 						<tr>
 							<th>Car Name</th>
 							<th>Production Year</th>
+							<th>Price per Day</th>
 							<th>Created At</th>
 							<th>Action</th>
 						</tr>
@@ -27,12 +28,19 @@
             null,
             null,
             null,
+            null,
             {
                 "width": "100"
             }
         ],
         "aaSorting": []
-    });
+	});
+
+	const IDR = value => currency(value, {
+		symbol: "IDR. ",
+		precision: 0,
+		separator: ","
+	});
 
     getData();
 
@@ -44,6 +52,7 @@
                     datatable.row.add([
                         value.car_name,
                         value.production_year,
+                        IDR(value.price_per_day).format(true),
                         value.created_at,
                         '<a href="'+base_url+'dashboard/car-data/edit/'+value.id+'.html" class="btn btn-success btn-xs"><i class="fa fa-pencil-square-o margin-0"></i> Edit</a> ' +
                         '<a href="#" class="btn btn-danger btn-xs" onclick="deleteData('+value.id+')"><i class="fa fa-trash-o margin-0"></i> Remove</a>'

@@ -17,6 +17,13 @@
 			<?php echo form_error('production_year', '<p class="help-block text-red">', '</p>'); ?>
 		</div>
 
+		<div class="form-group <?php echo form_error('price_per_day') ? 'has-error' : ''; ?>">
+			<label for="price_per_day">Price per Day</label>
+			<input type="text" name="price_per_day" id="price_per_day" class="form-control input-currency" placeholder="Price per Day"
+				value="<?php echo isset($car_data) ? $car_data->price_per_day : set_value('price_per_day'); ?>">
+			<?php echo form_error('price_per_day', '<p class="help-block text-red">', '</p>'); ?>
+		</div>
+
 	</div><!-- /.box-body -->
 
 	<div class="box-footer">
@@ -24,3 +31,12 @@
 	</div>
 	<?php echo form_close(); ?>
 </div>
+
+<script>
+	$(function () {
+		var cleave = new Cleave('.input-currency', {
+			numeral: true,
+			numeralThousandsGroupStyle: 'thousand'
+		});
+	});
+</script>

@@ -126,7 +126,7 @@ function decode_crypt($param)
     return $ci->encryption->decrypt(str_replace(array('.', '_', '~'), array('+', '/', '='), $param));
 }
 
-function replace_dot($number)
+function replace_dot($number, $dot = '.')
 {
-    return str_replace('.', '', $number);
+    return str_replace($dot, '', $number);
 }

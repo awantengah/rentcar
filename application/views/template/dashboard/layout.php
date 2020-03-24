@@ -232,6 +232,8 @@
 
 	<!-- Bootstrap 3.3.5 -->
 	<script src="<?php echo base_url('assets/AdminLTE-2.3.0/bootstrap/js/bootstrap.min.js'); ?>"></script>
+	<script src="<?php echo base_url('assets/AdminLTE-2.3.0/plugins/currency.js/dist/currency.min.js'); ?>"></script>
+	<script src="<?php echo base_url('assets/AdminLTE-2.3.0/plugins/cleave.js/dist/cleave.min.js'); ?>"></script>
 	<script src="<?php echo base_url('assets/AdminLTE-2.3.0/plugins/sweetalert2/dist/sweetalert2.min.js'); ?>"></script>
 	<!-- AdminLTE App -->
 	<script src="<?php echo base_url('assets/AdminLTE-2.3.0/dist/js/app.min.js'); ?>"></script>
