@@ -9,7 +9,8 @@ class MY_Controller extends CI_Controller
     protected $now;
     protected $rules;
 
-    protected $page_title;
+    public $page_title;
+    public $_sidebar_active;
 
     public $ci;
     public $limit = 10;
@@ -19,80 +20,9 @@ class MY_Controller extends CI_Controller
     public $_updated;
     public $_deleted;
 
-    public function _remap($method, $params = array())
-    {
-        if ($this->auth) {
-            $this->load->model('menu_model');
-            $this->load->model('privilege_model');
-
-            $level      = $this->session->userdata('level');
-            $class_name = get_class($this);
-
-            $menu = $this->menu_model->first(
-                array(
-                    'controller' => $class_name,
-                )
-            );
-            if (!empty($menu)) {
-                $privilege = $this->privilege_model->first(
-                    array(
-                        'id_level' => $level,
-                        'id_menu'  => $menu->id,
-                    )
-                );
-                if (!is_null($privilege)) {
-                    if ($privilege->view == 1) {
-                        $this->rules[$level][] = 'index';
-                        $this->rules[$level][] = 'lists';
-                        $this->rules[$level][] = 'get_data';
-                        $this->rules[$level][] = 'report';
-                    }
-                    if ($privilege->create == 1) {
-                        $this->_created        = 1;
-                        $this->rules[$level][] = 'add';
-                    }
-                    if ($privilege->update == 1) {
-                        $this->_updated = 1;
-                        if (!empty($params)) {
-                            $this->rules[$level][] = 'edit';
-                        }
-                    }
-                    if ($privilege->delete == 1) {
-                        $this->_deleted        = 1;
-                        $this->rules[$level][] = 'delete';
-                    }
-                }
-            }
-            if (!isset($this->rules[$level])) {
-                $this->rules[$level] = array();
-            }
-            $rules = $this->rules[$level];
-            if (!empty($rules)) {
-                if (in_array($method, $rules)) {
-                    if (method_exists($this, $method)) {
-                        return call_user_func_array(array($this, $method), $params);
-                    }
-                    show_404();
-                    return;
-                }
-            }
-            $data['message'] = 'You have no privilege to access it!';
-            $this->render('error', $data);
-        } else {
-            if (method_exists($this, $method)) {
-                return call_user_func_array(array($this, $method), $params);
-            }
-
-            show_404();
-            return;
-        }
-    }
-
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('menu_model');
-        $this->load->model('privilege_model');
         $this->load->model('user_model');
 
         $this->now = date('Y-m-d H:i:s');
@@ -144,30 +74,4 @@ class MY_Controller extends CI_Controller
         // $this->output->enable_profiler(true);
     }
 
-    public function parent_menu()
-    {
-        $sql = "SELECT id, title, url, icon, `order`, controller FROM (SELECT menu.id, menu.title, menu.url, menu.icon, menu.order, menu.controller FROM menu WHERE menu.url like '%#%' UNION SELECT menu.id, menu.title, menu.url, menu.icon, menu.order, menu.controller FROM menu JOIN privilege ON menu.id = privilege.id_menu WHERE privilege.id_level = {$this->session->userdata('level')} AND privilege.view = 1 AND menu.id_parent = 0) result ORDER BY `order` ASC";
-        return $this->db->query($sql)->result();
-    }
-
-    public function has_child_menu($id)
-    {
-        $child_menu = $this->menu_model->all(
-            array(
-                'fields'   => 'menu.*, privilege.view',
-                'join'     => array('privilege' => 'privilege.id_menu = menu.id'),
-                'where'    => array(
-                    'privilege.id_level' => $this->session->userdata('level'),
-                    'privilege.view'     => 1,
-                    'menu.id_parent'     => $id,
-                ),
-                'order_by' => 'menu.order asc',
-            )
-        );
-        if ($child_menu) {
-            return $child_menu;
-        } else {
-            return null;
-        }
-    }
 }

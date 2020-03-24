@@ -1,8 +1,4 @@
 <!DOCTYPE html>
-<!--
-This is a starter template page. Use this page to start your new project from
-scratch. This page gets rid of all links and provides the needed markup only.
--->
 <html>
 
 <head>
@@ -17,13 +13,39 @@ scratch. This page gets rid of all links and provides the needed markup only.
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 	<!-- Ionicons -->
 	<link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+	<!-- DataTables -->
+	<link rel="stylesheet"
+		href="<?php echo base_url('assets/AdminLTE-2.3.0/plugins/datatables/dataTables.bootstrap.css'); ?>">
 	<!-- Theme style -->
 	<link rel="stylesheet" href="<?php echo base_url('assets/AdminLTE-2.3.0/dist/css/AdminLTE.min.css'); ?>">
 	<!-- AdminLTE Skins. We have chosen the skin-blue for this starter
           page. However, you can choose any other skin. Make sure you
           apply the skin class to the body tag so the changes take effect.
-    -->
-	<link rel="stylesheet" href="<?php echo base_url('assets/AdminLTE-2.3.0/dist/css/skins/skin-blue.min.css'); ?>">
+	-->
+	<link rel="stylesheet" href="<?php echo base_url('assets/AdminLTE-2.3.0/plugins/sweetalert2/dist/sweetalert2.min.css'); ?>">
+	<link rel="stylesheet" href="<?php echo base_url('assets/AdminLTE-2.3.0/dist/css/skins/skin-awantengah.min.css'); ?>">
+
+	<style>
+		.swal2-popup {
+			font-size: 1.5rem;
+		}
+		.swal2-confirm.btn.btn-success {
+			margin-right: 0.5em;
+		}
+		.swal2-cancel.btn.btn-danger {
+			margin-left: 0.5em;
+		}
+	</style>
+
+	<!-- jQuery 2.1.4 -->
+	<script src="<?php echo base_url('assets/AdminLTE-2.3.0/plugins/jQuery/jQuery-2.1.4.min.js'); ?>"></script>
+	<!-- DataTables -->
+	<script src="<?php echo base_url('assets/AdminLTE-2.3.0/plugins/datatables/jquery.dataTables.min.js'); ?>"></script>
+	<script src="<?php echo base_url('assets/AdminLTE-2.3.0/plugins/datatables/dataTables.bootstrap.min.js'); ?>"></script>
+
+	<script>
+		let base_url = "<?php echo base_url(); ?>";
+	</script>
 
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -53,7 +75,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   |---------------------------------------------------------|
   -->
 
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="hold-transition skin-awantengah sidebar-mini">
 	<div class="wrapper">
 
 		<!-- Main Header -->
@@ -81,14 +103,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
 							<!-- Menu Toggle Button -->
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 								<!-- The user image in the navbar-->
-								<img src="<?php echo !is_null($_user_login->photo) ? base_url(get_config_item('user_path') . $_user_login->photo) : base_url('assets/img/user.png'); ?>" class="user-image" alt="User Image">
+								<img src="<?php echo !is_null($_user_login->photo) ? base_url(get_config_item('user_path') . $_user_login->photo) : base_url('assets/img/user.png'); ?>"
+									class="user-image" alt="User Image">
 								<!-- hidden-xs hides the username on small devices so only the image appears. -->
 								<span class="hidden-xs"><?php echo $_user_login->username; ?></span>
 							</a>
 							<ul class="dropdown-menu">
 								<!-- The user image in the menu -->
 								<li class="user-header">
-									<img src="<?php echo !is_null($_user_login->photo) ? base_url(get_config_item('user_path') . $_user_login->photo) : base_url('assets/img/user.png'); ?>" class="img-circle" alt="User Image">
+									<img src="<?php echo !is_null($_user_login->photo) ? base_url(get_config_item('user_path') . $_user_login->photo) : base_url('assets/img/user.png'); ?>"
+										class="img-circle" alt="User Image">
 									<p>
 										<?php echo $_user_login->username; ?>
 									</p>
@@ -99,7 +123,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
 										<a href="#" class="btn btn-default btn-flat">Profile</a>
 									</div>
 									<div class="pull-right">
-										<a href="<?php echo site_url('logout'); ?>" class="btn btn-default btn-flat">Sign out</a>
+										<a href="<?php echo site_url('logout'); ?>"
+											class="btn btn-default btn-flat">Sign out</a>
 									</div>
 								</li>
 							</ul>
@@ -117,7 +142,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
 				<!-- Sidebar user panel (optional) -->
 				<div class="user-panel">
 					<div class="pull-left image">
-						<img src="<?php echo !is_null($_user_login->photo) ? base_url(get_config_item('user_path') . $_user_login->photo) : base_url('assets/img/user.png'); ?>" class="img-circle" alt="User Image">
+						<img src="<?php echo !is_null($_user_login->photo) ? base_url(get_config_item('user_path') . $_user_login->photo) : base_url('assets/img/user.png'); ?>"
+							class="img-circle" alt="User Image">
 					</div>
 					<div class="pull-left info">
 						<p><?php echo $_user_login->username; ?></p>
@@ -130,15 +156,20 @@ scratch. This page gets rid of all links and provides the needed markup only.
 				<ul class="sidebar-menu">
 					<li class="header">NAVIGATION</li>
 					<!-- Optionally, you can add icons to the links -->
-					<li class="active"><a href="#"><i class="fa fa-link"></i> <span>Link</span></a></li>
-					<li><a href="#"><i class="fa fa-link"></i> <span>Another Link</span></a></li>
-					<li class="treeview">
-						<a href="#"><i class="fa fa-link"></i> <span>Multilevel</span> <i
-								class="fa fa-angle-left pull-right"></i></a>
-						<ul class="treeview-menu">
-							<li><a href="#">Link in level 2</a></li>
-							<li><a href="#">Link in level 2</a></li>
-						</ul>
+					<li class="<?php echo isset($_sidebar_active) ? ($_sidebar_active == 'home' ? 'active' : '') : ''; ?>">
+						<a href="<?php echo site_url('dashboard'); ?>">
+							<i class="fa fa-link"></i> <span>Dashboard</span>
+						</a>
+					</li>
+					<li class="<?php echo isset($_sidebar_active) ? ($_sidebar_active == 'car_data' ? 'active' : '') : ''; ?>">
+						<a href="<?php echo site_url('dashboard/car-data'); ?>">
+							<i class="fa fa-link"></i> <span>Car Data</span>
+						</a>
+					</li>
+					<li class="<?php echo isset($_sidebar_active) ? ($_sidebar_active == 'carculator' ? 'active' : '') : ''; ?>">
+						<a href="<?php echo site_url('dashboard/calculator'); ?>">
+							<i class="fa fa-link"></i> <span>Calculator</span>
+						</a>
 					</li>
 				</ul><!-- /.sidebar-menu -->
 			</section>
@@ -148,7 +179,39 @@ scratch. This page gets rid of all links and provides the needed markup only.
 		<!-- Content Wrapper. Contains page content -->
 		<div class="content-wrapper">
 
-            <?php echo $_main_content; ?>
+			<!-- Content Header (Page header) -->
+			<section class="content-header">
+				<h1>
+					<?php echo $page_title; ?>
+				</h1>
+
+				<?php if (isset($breadcrumb)): ?>
+				<ol class="breadcrumb">
+					<li>
+						<a href="<?php echo site_url('dashboard'); ?>"><i class="fa fa-dashboard"></i> Dashboard</a>
+					</li>
+					<?php foreach ($breadcrumb as $row): ?>
+					<?php if ($row['active'] == '1'): ?>
+					<li><?php echo ucwords($row['title']); ?></li>
+					<?php else: ?>
+					<li>
+						<a href="<?php echo $row['link']; ?>">
+							<i class="<?php echo $row['icon']; ?>"></i> <?php echo ucwords(($row['title'])); ?>
+						</a>
+					</li>
+					<?php endif;?>
+					<?php endforeach;?>
+				</ol>
+				<?php endif;?>
+			</section>
+
+			<!-- Main content -->
+			<section class="content">
+
+				<?php echo $_main_content; ?>
+
+			</section><!-- /.content -->
+
 
 		</div><!-- /.content-wrapper -->
 
@@ -159,17 +222,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 			</div>
 			<!-- Default to the left -->
-			<strong>Copyright &copy; <?php echo date('Y'); ?> <a href="https://awantengah.com/" target="_blank">Rahmat Basuki</a>.</strong> All rights reserved.
+			<strong>Copyright &copy; <?php echo date('Y'); ?> <a href="https://awantengah.com/" target="_blank">Rahmat
+					Basuki</a>.</strong> All rights reserved.
 		</footer>
 
 	</div><!-- ./wrapper -->
 
 	<!-- REQUIRED JS SCRIPTS -->
 
-	<!-- jQuery 2.1.4 -->
-	<script src="<?php echo base_url('assets/AdminLTE-2.3.0/plugins/jQuery/jQuery-2.1.4.min.js'); ?>"></script>
 	<!-- Bootstrap 3.3.5 -->
 	<script src="<?php echo base_url('assets/AdminLTE-2.3.0/bootstrap/js/bootstrap.min.js'); ?>"></script>
+	<script src="<?php echo base_url('assets/AdminLTE-2.3.0/plugins/sweetalert2/dist/sweetalert2.min.js'); ?>"></script>
 	<!-- AdminLTE App -->
 	<script src="<?php echo base_url('assets/AdminLTE-2.3.0/dist/js/app.min.js'); ?>"></script>
 
