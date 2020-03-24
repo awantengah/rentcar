@@ -9,12 +9,12 @@
 				<table id="datatable" class="table table-bordered table-striped" style="width: 100%;">
 					<thead>
 						<tr>
+							<th>Order Number</th>
 							<th>Car Name</th>
 							<th>Rent Begin</th>
 							<th>Rent End</th>
 							<th>Cost</th>
 							<th>Discount</th>
-							<th>Total Cost</th>
 							<th>Created At</th>
 							<th>Action</th>
 						</tr>
@@ -45,7 +45,7 @@
 	const IDR = value => currency(value, {
 		symbol: "IDR. ",
 		precision: 0,
-		separator: ","
+		separator: "."
 	});
 
     getData();
@@ -56,14 +56,14 @@
                 datatable.clear().draw();
                 $.each(response, function(key, value) {
                     datatable.row.add([
+                        value.order_number,
                         value.car_name,
                         value.rent_begin,
                         value.rent_end,
                         IDR(value.cost).format(true),
-                        value.discount,
-                        IDR(value.total_cost).format(true),
+                        IDR(value.discount).format(true),
                         value.created_at,
-                        '<a href="'+base_url+'dashboard/car-rental/edit/'+value.id+'.html" class="btn btn-success btn-xs"><i class="fa fa-pencil-square-o margin-0"></i> Edit</a> ' +
+                        '<a href="'+base_url+'dashboard/car-rental/edit/'+value.order_number+'.html" class="btn btn-success btn-xs"><i class="fa fa-pencil-square-o margin-0"></i> Edit</a> ' +
                         '<a href="#" class="btn btn-danger btn-xs" onclick="deleteData('+value.id+')"><i class="fa fa-trash-o margin-0"></i> Remove</a>'
                     ]).draw(false);
                 });

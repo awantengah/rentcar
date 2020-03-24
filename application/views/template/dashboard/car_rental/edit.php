@@ -6,6 +6,18 @@
                 <?php alert_message();?>
 
                 <div class="row" style="margin-bottom: 1em;">
+                    <div class="col-lg-12">
+                        <div style="display: inline-flex;">
+                            <div>
+                                <h4 style="margin: 0.5em 0; display: inline-block;">
+                                    <strong>Order Number:</strong>
+                                </h4>
+                            </div>
+                            <div style="margin-left: 1em;">
+                                <input type="text" name="order_number" class="form-control" value="<?php echo date('dmHis') . random_string('alnum', 7); ?>" readonly>
+                            </div>
+                        </div>
+                    </div>
                     <div class="col-lg-12 form-inline">
                         <div class="form-group">
                             <p class="form-control-static">Car Rental Amount</p>

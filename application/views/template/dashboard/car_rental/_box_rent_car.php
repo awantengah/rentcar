@@ -1,4 +1,5 @@
 <?php if ($num_box): ?>
+    <input type="hidden" name="num_box" value="<?php echo $num_box; ?>">
     <?php for ($i = 0; $i < $num_box; $i++): ?>
         <div class="panel panel-default">
             <div class="panel-body">
@@ -6,7 +7,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label>Car</label>
-                            <select name="car_data[<?php echo $i; ?>]" class="form-control" onchange="chooseCar(this.value, <?php echo $i; ?>)">
+                            <select name="id_car_data[<?php echo $i; ?>]" class="form-control" onchange="chooseCar(this.value, <?php echo $i; ?>)">
                                 <option value="">Choose Car</option>
                                 <?php if ($car_data): ?>
                                 <?php foreach ($car_data as $row): ?>
