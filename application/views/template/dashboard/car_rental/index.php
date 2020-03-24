@@ -2,7 +2,7 @@
 	<div class="col-xs-12">
 		<div class="box">
 			<div class="box-header">
-				<a href="<?php echo site_url('dashboard/car-rental/add'); ?>" class="btn btn-primary">Tambah</a>
+				<a href="<?php echo site_url('dashboard/car-rental/add'); ?>" class="btn btn-primary">Add</a>
 			</div><!-- /.box-header -->
 			<div class="box-body table-responsive">
                 <?php alert_message();?>

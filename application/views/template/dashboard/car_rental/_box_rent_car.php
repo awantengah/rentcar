@@ -118,36 +118,106 @@
            let cra = $("input[name=car_rental_amount]").val();
            $("#boxTotalPayment").html("");
 
-           let total_payment0 = 0;
-
            for(let x = 0; x < cra; x++) {
                 let ppd = $("#ppd"+x).text();
                 let ppd_rent_begin = $("input[name=rent_begin\\["+x+"\\]]").datepicker("getDate");
                 let ppd_rent_end = $("input[name=rent_end\\["+x+"\\]]").datepicker("getDate");
                 let ppd_days = (ppd_rent_end - ppd_rent_begin) / (1000 * 60 * 60 * 24);
                 let ppd_total = ppd * ppd_days;
-                total_payment0 += ppd_total;
 
                 $("#boxTotalPayment").append(
                     '<tr>' +
                     '<td>'+(IDR(ppd).format(true))+' x '+Math.round(ppd_days)+'</td>' +
                     '<td width="10">:</td>' +
                     '<td class="text-right">'+(IDR(ppd_total).format(true))+'</td>' +
+                    '</tr>' +
+                    '<tr>' +
+                    '<td class="text-right"><em>Discount <span id="discountText'+x+'"></span></em></td>' +
+                    '<td width="10">:</td>' +
+                    '<td class="text-right" style="color: red;">(<span id="discount'+x+'"></span>)</td>' +
                     '</tr>'
                 );
            }
 
-           $("#boxTotalPayment").append(
-               '<tr>' +
-                '<td>Total</td>' +
-                '<td width="10">:</td>' +
-                '<td class="text-right">'+(IDR(total_payment0).format(true))+'</td>' +
-                '</tr>'
-           );
+           discount();
     }
 
     function discount() {
-        let discount = 0;
+        let cra = $("input[name=car_rental_amount]").val();
+
+        let total_payment = 0;
+
+        for(let x = 0; x < cra; x++) {
+
+            let rd = $("#rd"+x).text();
+            let py = $("#py"+x).text();
+
+            let ppd = $("#ppd"+x).text();
+            let ppd_rent_begin = $("input[name=rent_begin\\["+x+"\\]]").datepicker("getDate");
+            let ppd_rent_end = $("input[name=rent_end\\["+x+"\\]]").datepicker("getDate");
+            let ppd_days = (ppd_rent_end - ppd_rent_begin) / (1000 * 60 * 60 * 24);
+            let ppd_total = ppd * ppd_days;
+
+            let discount1 = 0;
+            let discount2 = 0;
+            let discount3 = 0;
+
+            let discount1_text = '';
+            let discount2_text = '';
+            let discount3_text = '';
+
+            let ppd_discount1 = 0;
+            let ppd_discount2 = 0;
+            let ppd_discount3 = 0;
+
+            if(Math.round(rd) >= 3) { //lebih dari sama dengan 3 hari
+                discount1 = 0.05; //5%
+                discount1_text = " 5% ";
+
+                ppd_discount1 = ppd_total * discount1;
+            } else {
+                ppd_discount1 = 0;
+            }
+
+            if(cra >= 2) { //lebih dari sama dengan 2 mobil
+                discount2 = 0.1; //10%
+                discount2_text = " 10% ";
+
+                ppd_discount2 = discount1 == 0 ? (ppd_total * discount2) : (ppd_discount1 * discount2);
+            } else {
+                ppd_discount2 = 0;
+            }
+
+            if(py < 2010 && py != 0) {
+                discount3 = 0.07; //7%
+                discount3_text = " 7% ";
+
+                ppd_discount3 = discount2 == 0 ? (ppd_total * discount3) : (ppd_discount2 * discount3);
+            } else {
+                ppd_discount3 = 0;
+            }
+
+            $("#discountText"+x).html(
+                (discount1_text != '' ? discount1_text.concat('+') : '') + (discount3_text != '' ? discount2_text.concat('+') : discount2_text) + discount3_text
+            );
+
+            $("#discount"+x).html(
+                IDR(parseInt(ppd_discount1) + parseInt(ppd_discount2) + parseInt(ppd_discount3)).format(true)
+            );
+
+            total_payment += ppd_total - (parseInt(ppd_discount1) + parseInt(ppd_discount2) + parseInt(ppd_discount3));
+        }
+
+        $("#boxTotalPayment").append(
+               '<tr>' +
+                '<td>Total</td>' +
+                '<td width="10">:</td>' +
+                '<td class="text-right">'+(IDR(total_payment).format(true))+'</td>' +
+                '</tr>' +
+               '<tr>' +
+                '<td colspan="3"><button type="submit" class="btn btn-primary">Submit Rent</button></td>' +
+                '</tr>'
+           );
 
     }
 </script>

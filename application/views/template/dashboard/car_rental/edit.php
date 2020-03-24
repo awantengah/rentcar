@@ -1,7 +1,7 @@
 <div class="row">
+    <?php echo form_open(); ?>
     <div class="col-md-8">
         <div class="box box-primary">
-            <?php echo form_open(); ?>
             <div class="box-body">
                 <?php alert_message();?>
 
@@ -24,11 +24,6 @@
                 </div>
 
             </div><!-- /.box-body -->
-
-            <!-- <div class="box-footer">
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </div> -->
-            <?php echo form_close(); ?>
         </div>
     </div>
     <div class="col-md-4">
@@ -41,6 +36,7 @@
             </div>
         </div>
     </div>
+    <?php echo form_close(); ?>
 </div>
 
 <script>
