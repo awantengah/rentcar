@@ -43,6 +43,10 @@
 	<script src="<?php echo base_url('assets/AdminLTE-2.3.0/plugins/datatables/jquery.dataTables.min.js'); ?>"></script>
 	<script src="<?php echo base_url('assets/AdminLTE-2.3.0/plugins/datatables/dataTables.bootstrap.min.js'); ?>"></script>
 
+	<link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css">
+	<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+	<script src="<?php echo base_url('assets/js/jquery.datetimepicker.full.js'); ?>"></script>
+
 	<script>
 		let base_url = "<?php echo base_url(); ?>";
 	</script>
@@ -166,9 +170,9 @@
 							<i class="fa fa-link"></i> <span>Car Data</span>
 						</a>
 					</li>
-					<li class="<?php echo isset($_sidebar_active) ? ($_sidebar_active == 'carculator' ? 'active' : '') : ''; ?>">
-						<a href="<?php echo site_url('dashboard/calculator'); ?>">
-							<i class="fa fa-link"></i> <span>Calculator</span>
+					<li class="<?php echo isset($_sidebar_active) ? ($_sidebar_active == 'car_rental' ? 'active' : '') : ''; ?>">
+						<a href="<?php echo site_url('dashboard/car-rental'); ?>">
+							<i class="fa fa-link"></i> <span>Car Rental</span>
 						</a>
 					</li>
 				</ul><!-- /.sidebar-menu -->

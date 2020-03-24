@@ -9,7 +9,6 @@ class Site extends MY_Controller
         $this->load->model('user_model');
 
         $this->layout = 'template';
-        $this->auth   = false;
     }
 
     public function index()

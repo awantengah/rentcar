@@ -2,7 +2,7 @@
 	<div class="col-xs-12">
 		<div class="box">
 			<div class="box-header">
-				<a href="<?php echo site_url('dashboard/car-data/add'); ?>" class="btn btn-primary">Tambah</a>
+				<a href="<?php echo site_url('dashboard/car-rental/add'); ?>" class="btn btn-primary">Tambah</a>
 			</div><!-- /.box-header -->
 			<div class="box-body table-responsive">
                 <?php alert_message();?>
@@ -10,8 +10,11 @@
 					<thead>
 						<tr>
 							<th>Car Name</th>
-							<th>Production Year</th>
-							<th>Price per Day</th>
+							<th>Rent Begin</th>
+							<th>Rent End</th>
+							<th>Cost</th>
+							<th>Discount</th>
+							<th>Total Cost</th>
 							<th>Created At</th>
 							<th>Action</th>
 						</tr>
@@ -29,6 +32,9 @@
             null,
             null,
             null,
+            null,
+            null,
+            null,
             {
                 "width": "100"
             }
@@ -39,22 +45,25 @@
 	const IDR = value => currency(value, {
 		symbol: "IDR. ",
 		precision: 0,
-		separator: "."
+		separator: ","
 	});
 
     getData();
 
     function getData(){
-        $.get(base_url + 'dashboard/car_data/get_data')
+        $.get(base_url + 'dashboard/car_rental/get_data')
             .then(function(response) {
                 datatable.clear().draw();
                 $.each(response, function(key, value) {
                     datatable.row.add([
                         value.car_name,
-                        value.production_year,
-                        IDR(value.price_per_day).format(true),
+                        value.rent_begin,
+                        value.rent_end,
+                        IDR(value.cost).format(true),
+                        value.discount,
+                        IDR(value.total_cost).format(true),
                         value.created_at,
-                        '<a href="'+base_url+'dashboard/car-data/edit/'+value.id+'.html" class="btn btn-success btn-xs"><i class="fa fa-pencil-square-o margin-0"></i> Edit</a> ' +
+                        '<a href="'+base_url+'dashboard/car-rental/edit/'+value.id+'.html" class="btn btn-success btn-xs"><i class="fa fa-pencil-square-o margin-0"></i> Edit</a> ' +
                         '<a href="#" class="btn btn-danger btn-xs" onclick="deleteData('+value.id+')"><i class="fa fa-trash-o margin-0"></i> Remove</a>'
                     ]).draw(false);
                 });
@@ -78,7 +87,7 @@
             cancelButtonText: 'No, cancel!'
 		}).then((result) => {
 			if (result.value) {
-				$.get(base_url + 'dashboard/car-data/delete', {
+				$.get(base_url + 'dashboard/car-rental/delete', {
 						id: id
 					})
 					.then(function (response) {

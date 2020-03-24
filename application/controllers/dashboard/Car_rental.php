@@ -2,24 +2,31 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Car_data extends MY_Controller
+class Car_rental extends MY_Controller
 {
     public function __construct()
     {
         parent::__construct();
         $this->check_validation();
 
-        $this->load->model('car_data_model');
+        $this->load->model('car_rental_model');
 
-        $this->page_title = 'Car Data';
+        $this->page_title = 'Car Rental';
         $this->layout     = 'template/dashboard';
 
-        $this->_sidebar_active = 'car_data';
+        $this->_sidebar_active = 'car_rental';
     }
 
     public function get_data()
     {
-        $data = $this->car_data_model->all();
+        $data = $this->car_rental_model->all(
+            array(
+                'fields'    => 'car_rental.*, car_data.car_name',
+                'left_join' => array(
+                    'car_data' => 'car_data.id = car_rental.id_car_data AND car_data.deleted_at IS NULL',
+                ),
+            )
+        );
         return $this->output
             ->set_content_type('application/json')
             ->set_output(json_encode($data));
@@ -28,9 +35,9 @@ class Car_data extends MY_Controller
     public function index()
     {
         $data['breadcrumb'] = [
-            ['link' => '', 'title' => 'car data', 'icon' => '', 'active' => '1'],
+            ['link' => '', 'title' => 'car rental', 'icon' => '', 'active' => '1'],
         ];
-        $this->render('car_data/index', $data);
+        $this->render('car_rental/index', $data);
     }
 
     public function add()
@@ -46,15 +53,8 @@ class Car_data extends MY_Controller
                 ['link' => site_url('dashboard/car-data'), 'title' => 'car data', 'icon' => '', 'active' => '0'],
                 ['link' => '', 'title' => 'add car data', 'icon' => '', 'active' => '1'],
             ];
-            $this->render('car_data/edit', $data);
+            $this->render('car_rental/edit', $data);
         } else {
-            $data = array(
-                'car_name'        => $this->input->post('car_name', true),
-                'production_year' => $this->input->post('production_year', true),
-                'price_per_day'   => replace_dot($this->input->post('price_per_day', true)),
-                'created_at'      => $this->now,
-            );
-            $this->car_data_model->save($data);
 
             $this->session->set_flashdata('message', array('message' => 'Action Successfully..', 'class' => 'alert-success'));
             redirect('dashboard/car-data');
@@ -74,16 +74,9 @@ class Car_data extends MY_Controller
                 ['link' => site_url('dashboard/car-data'), 'title' => 'car data', 'icon' => '', 'active' => '0'],
                 ['link' => '', 'title' => 'edit car data', 'icon' => '', 'active' => '1'],
             ];
-            $data['car_data'] = $this->car_data_model->first($id);
-            $this->render('car_data/edit', $data);
+            $data['car_rental'] = $this->car_rental_model->first($id);
+            $this->render('car_rental/edit', $data);
         } else {
-            $data = array(
-                'car_name'        => $this->input->post('car_name', true),
-                'production_year' => $this->input->post('production_year', true),
-                'price_per_day'   => replace_dot($this->input->post('price_per_day', true)),
-                'updated_at'      => $this->now,
-            );
-            $this->car_data_model->edit($id, $data);
 
             $this->session->set_flashdata('message', array('message' => 'Action Successfully..', 'class' => 'alert-success'));
             redirect('dashboard/car-data');
@@ -94,12 +87,12 @@ class Car_data extends MY_Controller
     {
         $id = $this->input->get('id', true);
         if ($id) {
-            $check_exist = $this->car_data_model->first($id);
+            $check_exist = $this->car_rental_model->first($id);
             if ($check_exist) {
                 $data_edit = array(
                     'deleted_at' => $this->now,
                 );
-                $this->car_data_model->edit($id, $data_edit);
+                $this->car_rental_model->edit($id, $data_edit);
                 return true;
             }
             return false;

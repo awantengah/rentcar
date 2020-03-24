@@ -36,7 +36,9 @@
 	$(function () {
 		var cleave = new Cleave('.input-currency', {
 			numeral: true,
-			numeralThousandsGroupStyle: 'thousand'
+			numeralThousandsGroupStyle: 'thousand',
+			numeralDecimalMark: ',',
+			delimiter: '.',
 		});
 	});
 </script>
